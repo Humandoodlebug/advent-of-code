@@ -51,10 +51,10 @@ let findSumTo3 sum inp =
 
 [<EntryPoint>]
 let main argv =
-    let (Some (x1, x2)) = findSumTo 2020L input
+    let (Some (x1, x2)) = Util.time (fun () -> findSumTo 2020L input)
     printfn "%i + %i = 2020" x1 x2
     printfn "%i * %i = %i" x1 x2 (x1 * x2)
-    let (Some (x1, x2, x3)) = findSumTo3 2020L input
+    let (Some (x1, x2, x3)) = Util.time (fun () -> findSumTo3 2020L input)
     printfn "%i + %i + %i = 2020" x1 x2 x3
     printfn "%i * %i * %i = %i" x1 x2 x3 (x1 * x2 * x3)
     0

@@ -1,6 +1,7 @@
 module AdventOfCode2020.Util
 
 open System
+open System.Diagnostics
 open System.IO
 
 let ParseLineInts (line: String): int64 [] = line.Split ' ' |> Array.map int64
@@ -20,3 +21,10 @@ let readFileInts path =
         use reader = File.OpenText path
         yield! readAllInts reader
     }
+
+let time f =
+    let stopwatch = Stopwatch.StartNew()
+    let result = f ()
+    stopwatch.Stop()
+    eprintfn "Elapsed milliseconds: %f" stopwatch.Elapsed.TotalMilliseconds
+    result
