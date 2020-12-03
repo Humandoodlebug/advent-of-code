@@ -4,7 +4,7 @@ open System
 open System.Diagnostics
 open System.IO
 
-let ParseLineInts (line: String): int64 [] = line.Split ' ' |> Array.map int64
+let ParseLineInts (line: string): int64 [] = line.Split ' ' |> Array.map int64
 
 let readAllInts (reader: TextReader) =
     seq {
