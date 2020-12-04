@@ -3,34 +3,15 @@ module AdventOfCode2020.Day4
 open System
 open System.IO
 
-
 let input () =
-    File.ReadAllLines "input/day4.txt" |> Array.toList
+    (File.ReadAllText "input/day4.txt").Replace("\r", String.Empty).Replace('\n', ' ').TrimEnd().Split("  ") |> Array.toList
 
 let parseInput inp =
     let parseField (f: string) =
         let [| n; v |] = f.Split(':')
         n, v
-
-    let parseLine =
-        function
-        | "" -> []
-        | l -> Array.map parseField (l.Split ' ') |> Array.toList
-
-    let folder (maps: Map<string, string> list) fields =
-        match maps with
-        | [] ->
-            match fields with
-            | [] -> []
-            | ls -> [ List.fold (fun m (n, v) -> Map.add n v m) Map.empty ls ]
-        | m :: ms ->
-            match fields with
-            | [] -> if m = Map.empty then m :: ms else Map.empty :: m :: ms
-            | ls ->
-                List.fold (fun m (n, v) -> Map.add n v m) m ls
-                :: ms
-
-    List.fold folder [] <| List.map parseLine inp
+    let parsePassport (s:string) = Array.map parseField <| s.Split(' ') |> Map.ofArray
+    List.map parsePassport inp
 
 let trimEnd (s: string) i = s.Substring(0, s.Length - i)
 
