@@ -4,13 +4,19 @@ open System
 open System.IO
 
 let input () =
-    (File.ReadAllText "input/day4.txt").Replace("\r", String.Empty).Replace('\n', ' ').TrimEnd().Split("  ") |> Array.toList
+    (File.ReadAllText "input/day4.txt").Replace("\r", String.Empty).Replace('\n', ' ').TrimEnd().Split("  ")
+    |> Array.toList
 
 let parseInput inp =
     let parseField (f: string) =
         let [| n; v |] = f.Split(':')
         n, v
-    let parsePassport (s:string) = Array.map parseField <| s.Split(' ') |> Map.ofArray
+
+    let parsePassport (s: string) =
+        Array.map parseField
+        <| s.Split(' ')
+        |> Map.ofArray
+
     List.map parsePassport inp
 
 let trimEnd (s: string) i = s.Substring(0, s.Length - i)
@@ -29,9 +35,21 @@ let validators =
       (fun (s: string) ->
           s.StartsWith('#')
           && Array.forall (fun x -> List.contains x ([ '0' .. '9' ] @ [ 'a' .. 'f' ])) (s.Substring(1).ToCharArray()))
-      "ecl", fun (s: string) -> List.contains s ["amb"; "blu"; "brn"; "gry"; "grn"; "hzl"; "oth"]
-      "pid", fun (s: string) -> s.Length = 9 && Array.forall (fun x -> List.contains x [ '0' .. '9' ]) (s.ToCharArray())
-    ]
+      "ecl",
+      (fun (s: string) ->
+          List.contains
+              s
+              [ "amb"
+                "blu"
+                "brn"
+                "gry"
+                "grn"
+                "hzl"
+                "oth" ])
+      "pid",
+      (fun (s: string) ->
+          s.Length = 9
+          && Array.forall (fun x -> List.contains x [ '0' .. '9' ]) (s.ToCharArray())) ]
 
 let validateField (m: Map<string, string>) (k, f) =
     match m.TryFind k with
@@ -48,6 +66,9 @@ let run () =
 
     let validCount = List.length validMaps
     printfn "Passports with required fields: %i" validCount
-    let validatedMaps = List.filter (fun (m: Map<string, string>) -> List.forall (fun v -> validateField m v) validators) validMaps
+
+    let validatedMaps =
+        List.filter (fun (m: Map<string, string>) -> List.forall (fun v -> validateField m v) validators) validMaps
+
     let validatedCount = List.length validatedMaps
     printfn "Passports with valid required fields: %i" validatedCount
