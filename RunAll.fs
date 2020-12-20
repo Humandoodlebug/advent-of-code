@@ -26,4 +26,5 @@ let main argv =
     runDay 17 Day17.run
     runDay 18 Day18.run
     runDay 19 Day19.run
+    runDay 20 Day20.run
     0
