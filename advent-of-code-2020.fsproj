@@ -1,12 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>AdventOfCode2020</RootNamespace>
     <AssemblyName>AdventOfCode2020</AssemblyName>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="Util.fs" />
     <Compile Include="Day1.fs" />
@@ -30,7 +28,7 @@
     <Compile Include="Day19.fs" />
     <Compile Include="Day20.fs" />
     <Compile Include="Day21.fs" />
+    <Compile Include="Day22.fs" />
     <Compile Include="RunAll.fs" />
   </ItemGroup>
-
 </Project>
