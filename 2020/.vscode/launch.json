@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/AdventOfCode2020.dll",
+            "program": "${workspaceFolder}/bin/Debug/net6.0/AdventOfCode2020.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
