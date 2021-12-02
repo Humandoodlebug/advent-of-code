@@ -1,10 +1,10 @@
 #![feature(array_windows)]
 
+extern crate util;
+
 fn main() {
-    let depths: Vec<i32> = std::fs::read_to_string("input/day1.txt")
-        .unwrap()
-        .split('\n')
-        .filter(|x| !x.is_empty())
+    let depths: Vec<i32> = util::get_day_input(1)
+        .lines()
         .map(|x| x.parse().unwrap())
         .collect();
 
