@@ -21,5 +21,5 @@ fn main() {
             fuel
         })
         .sum();
-        println!("Part 2: {}", part2);
+    println!("Part 2: {}", part2);
 }
