@@ -10,11 +10,7 @@ fn input() -> (Vec<i32>, Vec<Vec<Vec<i32>>>) {
     let grids: Vec<Vec<Vec<i32>>> = grid_chunks
         .map(|ls| {
             ls.iter()
-                .map(|l| {
-                    l.split_whitespace()
-                        .map(|s| s.parse().unwrap())
-                        .collect()
-                })
+                .map(|l| l.split_whitespace().map(|s| s.parse().unwrap()).collect())
                 .collect()
         })
         .collect();
