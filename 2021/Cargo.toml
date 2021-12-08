@@ -10,3 +10,4 @@ path = "src/util.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+itertools = "0.10.3"
