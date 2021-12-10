@@ -52,7 +52,7 @@ fn main() {
             ']' => 2,
             '}' => 3,
             '>' => 4,
-            c => panic!("Unrecongnised closing brace {:?}", c),
+            c => panic!("Unrecognised closing bracket {:?}", c),
         }).fold(0i128, |s, x| s * 5 + x as i128);
         scores.push(score)
     }
