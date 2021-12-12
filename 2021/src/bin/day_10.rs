@@ -13,14 +13,16 @@ fn main() {
                 '[' => remaining.push(']'),
                 '{' => remaining.push('}'),
                 '<' => remaining.push('>'),
-                c => if c != remaining.pop().unwrap_or('\0') {
-                    part1 += match c {
-                        ')' => 3,
-                        ']' => 57,
-                        '}' => 1197,
-                        '>' => 25137,
-                        c => panic!("Unrecognised closing bracket {:?}", c),
-                    };
+                c => {
+                    if c != remaining.pop().unwrap_or('\0') {
+                        part1 += match c {
+                            ')' => 3,
+                            ']' => 57,
+                            '}' => 1197,
+                            '>' => 25137,
+                            c => panic!("Unrecognised closing bracket {:?}", c),
+                        };
+                    }
                 }
             }
         }
@@ -37,9 +39,11 @@ fn main() {
                 '[' => remaining.push(']'),
                 '{' => remaining.push('}'),
                 '<' => remaining.push('>'),
-                c => if c != remaining.pop().unwrap_or('\0') {
-                    remaining.clear();
-                    break;
+                c => {
+                    if c != remaining.pop().unwrap_or('\0') {
+                        remaining.clear();
+                        break;
+                    }
                 }
             }
         }
@@ -47,13 +51,17 @@ fn main() {
             continue;
         }
 
-        let score = remaining.into_iter().rev().map(|c| match c {
-            ')' => 1,
-            ']' => 2,
-            '}' => 3,
-            '>' => 4,
-            c => panic!("Unrecognised closing bracket {:?}", c),
-        }).fold(0i128, |s, x| s * 5 + x as i128);
+        let score = remaining
+            .into_iter()
+            .rev()
+            .map(|c| match c {
+                ')' => 1,
+                ']' => 2,
+                '}' => 3,
+                '>' => 4,
+                c => panic!("Unrecognised closing bracket {:?}", c),
+            })
+            .fold(0i128, |s, x| s * 5 + x as i128);
         scores.push(score)
     }
     scores.sort_unstable();
