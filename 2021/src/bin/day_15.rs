@@ -1,5 +1,5 @@
 use ansi_term::Colour;
-use std::collections::{BinaryHeap, HashMap};
+use std::collections::BinaryHeap;
 
 extern crate util;
 
@@ -35,11 +35,8 @@ impl Ord for Path {
 fn find_min_cost(grid: &[Vec<i32>]) -> i32 {
     let target = (grid.len() - 1, grid[0].len() - 1);
     let mut queue = BinaryHeap::<Path>::new();
-    let mut min_costs_per_point = HashMap::new();
-    min_costs_per_point.insert((0, 0), 0);
-    let upper_bound: i32 =
-        grid[grid.len() - 1].iter().skip(1).sum::<i32>() + grid.iter().map(|l| l[0]).sum::<i32>();
-
+    let mut min_costs_per_point = vec![vec![i32::MAX; grid[0].len()]; grid.len()];
+    min_costs_per_point[0][0] = 0;
     queue.push(Path {
         cost: 0,
         path: vec![(0, 0)],
@@ -51,12 +48,8 @@ fn find_min_cost(grid: &[Vec<i32>]) -> i32 {
             // print_path(grid, &path.path);
             return path.cost;
         }
-        if let Some(&min_cost) = min_costs_per_point.get(&(x, y)) {
-            if min_cost < path.cost {
-                continue;
-            }
-        } else {
-            panic!("err???")
+        if min_costs_per_point[x][y] < path.cost {
+            continue;
         }
         for (i, j) in [(0, 1), (1, 0), (0, -1), (-1, 0)] {
             let x_new = x as i32 + i;
@@ -67,21 +60,13 @@ fn find_min_cost(grid: &[Vec<i32>]) -> i32 {
             }
             let x_new = x_new as usize;
             let y_new = y_new as usize;
-            if path.path.contains(&(x_new, y_new)) {
-                continue;
-            }
             let mut new_path = path.clone();
             new_path.path.push((x_new, y_new));
             new_path.cost += grid[x_new][y_new];
-            if new_path.cost > upper_bound {
+            if new_path.cost >= min_costs_per_point[x_new][y_new] {
                 continue;
             }
-            if let Some(&min_cost) = min_costs_per_point.get(&(x_new, y_new)) {
-                if min_cost <= new_path.cost {
-                    continue;
-                }
-            }
-            min_costs_per_point.insert((x_new, y_new), new_path.cost);
+            min_costs_per_point[x_new][y_new] = new_path.cost;
             queue.push(new_path);
         }
     }
