@@ -11,3 +11,4 @@ path = "src/util.rs"
 
 [dependencies]
 itertools = "0.10.3"
+ansi_term = "0.12.1"
