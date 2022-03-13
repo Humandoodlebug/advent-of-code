@@ -1,5 +1,3 @@
-#![feature(in_band_lifetimes)]
-
 extern crate util;
 
 pub fn input() -> Vec<Vec<char>> {
@@ -9,8 +7,8 @@ pub fn input() -> Vec<Vec<char>> {
         .collect()
 }
 
-fn common_bits(
-    bits: impl IntoIterator<Item = &'a char>,
+fn common_bits<'a, I: IntoIterator<Item = &'a char>>(
+    bits: I,
     selector: impl Fn((i32, i32)) -> char,
 ) -> char {
     let mut counts = (0, 0);

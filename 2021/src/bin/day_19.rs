@@ -1,5 +1,3 @@
-#![feature(int_abs_diff)]
-
 use std::collections::{HashMap, HashSet};
 
 use itertools::Itertools;
@@ -67,10 +65,10 @@ fn rotate_all_90(point: Point) -> Vec<Point> {
     }
     for p in points.clone() {
         let mut temp = p;
-        for _ in 0..3 {
-            temp = mat_dot(temp, MAT_Y);
-            points.push(temp);
-        }
+        temp = mat_dot(temp, MAT_Y);
+        points.push(temp);
+        temp = mat_dot(mat_dot(temp, MAT_Y), MAT_Y);
+        points.push(temp);
     }
 
     for p in points.clone() {
@@ -163,7 +161,6 @@ fn main() {
         remaining = left;
     }
     println!("Part 1: {}", locations.len());
-
 
     let mut part2 = 0;
     for &(x_a, y_a, z_a) in scanner_locations.values() {

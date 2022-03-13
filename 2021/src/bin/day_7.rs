@@ -1,4 +1,3 @@
-#![feature(int_abs_diff)]
 extern crate util;
 
 fn main() {
