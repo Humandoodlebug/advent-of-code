@@ -89,7 +89,13 @@ fn reduce(mut num: Number) -> Number {
             Literal(x) => {
                 if x >= 10 {
                     let round_up = x % 2;
-                    (Pair(Box::new(Literal(x / 2)), Box::new(Literal(x / 2 + round_up))), true)
+                    (
+                        Pair(
+                            Box::new(Literal(x / 2)),
+                            Box::new(Literal(x / 2 + round_up)),
+                        ),
+                        true,
+                    )
                 } else {
                     (Literal(x), false)
                 }

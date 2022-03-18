@@ -144,9 +144,6 @@ fn gen_moves<const H: usize>((grid, cost): State<H>) -> Vec<State<H>> {
 }
 
 fn is_done<const H: usize>(grid: &Grid<H>) -> bool {
-    // for (&piece, &x) in COLUMN.iter() {
-    //     if !gr
-    // }
     COLUMN
         .iter()
         .all(|(&piece, &x)| (2..H - 1).all(|y| grid[x][y] == Has(piece)))
@@ -182,20 +179,10 @@ fn cost_lower_bound<const H: usize>((grid, cost): &State<H>) -> usize {
 fn play<const H: usize>(grid: Grid<H>) -> usize {
     let mut pq = PriorityQueue::new();
     let initial_state = (grid, 0);
-    // print_grid(&grid);
     let initial_lower_bound_estimate = cost_lower_bound(&initial_state);
     pq.push(initial_state, -(initial_lower_bound_estimate as i64));
-    // let mut i = 0;
     loop {
-        // i += 1;
         let (current_state, _) = pq.pop().unwrap();
-        // if i % 100 == 0 {
-        //     println!("Processing state: ");
-        //     print_grid(&current_state.0);
-        //     println!("Cost: {}", current_state.1);
-        //     println!("Estimated cost: {}", cost_lower_bound(&current_state));
-        //     print!("");
-        // }
         let next_states = gen_moves(current_state);
         for state in next_states {
             if is_done(&state.0) {

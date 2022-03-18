@@ -32,14 +32,16 @@ fn input() -> (Vec<bool>, Vec<Vec<bool>>) {
 
     assert!(lines.next().unwrap().is_empty());
 
-    let image: Vec<Vec<bool>> = lines.map(|l| l.chars().map(parse_symbol).collect()).collect();
+    let image: Vec<Vec<bool>> = lines
+        .map(|l| l.chars().map(parse_symbol).collect())
+        .collect();
     (alg, image)
 }
 
 fn enhance(alg: &[bool], image: &Image) -> Image {
     let mut new_image = Image {
         default: false,
-        pixels: vec![vec![false; image.pixels[0].len() + 4]; image.pixels.len() + 4]
+        pixels: vec![vec![false; image.pixels[0].len() + 4]; image.pixels.len() + 4],
     };
     for x in 0..image.pixels.len() + 4 {
         for y in 0..image.pixels[0].len() + 4 {
@@ -47,8 +49,8 @@ fn enhance(alg: &[bool], image: &Image) -> Image {
             let y_old = y as i32 - 2;
 
             let mut num = 0;
-            for i in x_old-1..=x_old+1 {
-                for j in y_old-1..=y_old+1 {
+            for i in x_old - 1..=x_old + 1 {
+                for j in y_old - 1..=y_old + 1 {
                     num *= 2;
                     if image.get(i, j) {
                         num += 1;
@@ -74,7 +76,12 @@ fn main() {
     };
 
     for l in enhance(&alg, &image).pixels {
-        println!("{}", l.iter().map(|&b| if b {'#'} else {'.'}).collect::<String>());
+        println!(
+            "{}",
+            l.iter()
+                .map(|&b| if b { '#' } else { '.' })
+                .collect::<String>()
+        );
     }
     let result = enhance(&alg, &enhance(&alg, &image));
 

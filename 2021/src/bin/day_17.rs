@@ -7,11 +7,13 @@ fn input() -> ((i32, i32), (i32, i32)) {
 fn main() {
     let ((x_min, x_max), (y_min, y_max)) = input();
 
-    let x_vel = (1..).find(|x| {
-        let p = (x * (x + 1)) / 2;
-        p >= x_min && p <= x_max
-    }).unwrap();
-    let y_vel = - y_min - 1;
+    let x_vel = (1..)
+        .find(|x| {
+            let p = (x * (x + 1)) / 2;
+            p >= x_min && p <= x_max
+        })
+        .unwrap();
+    let y_vel = -y_min - 1;
     dbg!((x_vel, y_vel));
     let part1 = (y_vel * (y_vel + 1)) / 2;
     println!("Part 1: {}", part1);

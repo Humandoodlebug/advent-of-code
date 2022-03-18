@@ -40,7 +40,9 @@ fn input() -> Vec<Instruction> {
 
 fn calc_instruction_volume(instruction: Instruction) -> i128 {
     let calc_range = |(a, b)| (b - a + 1) as i128;
-    calc_range(instruction.x_range) * calc_range(instruction.y_range) * calc_range(instruction.z_range)
+    calc_range(instruction.x_range)
+        * calc_range(instruction.y_range)
+        * calc_range(instruction.z_range)
 }
 
 fn main() {
@@ -98,10 +100,15 @@ fn main() {
         }
     }
 
-    let part2: i128 = layers.into_iter().map(|l| if l.on {
-        calc_instruction_volume(l)
-    } else {
-        -calc_instruction_volume(l)
-    }).sum();
+    let part2: i128 = layers
+        .into_iter()
+        .map(|l| {
+            if l.on {
+                calc_instruction_volume(l)
+            } else {
+                -calc_instruction_volume(l)
+            }
+        })
+        .sum();
     println!("Part 2: {}", part2);
 }
