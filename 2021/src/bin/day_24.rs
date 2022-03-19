@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use itertools::Itertools;
 use util::get_day_input;
 use Argument::*;
 use Instruction::*;
