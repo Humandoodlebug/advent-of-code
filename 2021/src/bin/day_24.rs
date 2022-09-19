@@ -81,11 +81,7 @@ fn exec_instruction(instruction: Instruction, mut state: State) -> State {
         Div(var, arg) => *state.vars.get_mut(&var).unwrap() /= eval(arg, &state),
         Mod(var, arg) => *state.vars.get_mut(&var).unwrap() %= eval(arg, &state),
         Eql(var, arg) => {
-            *state.vars.get_mut(&var).unwrap() = if state.vars[&var] == eval(arg, &state) {
-                1
-            } else {
-                0
-            }
+            *state.vars.get_mut(&var).unwrap() = isize::from(state.vars[&var] == eval(arg, &state))
         }
     }
     state
@@ -95,7 +91,7 @@ fn main() {
     let instructions = input();
 
     // let model_number = 91599994399395isize;  // Part 1
-    let model_number = 71111591176151isize;  // Part 2
+    let model_number = 71111591176151isize; // Part 2
     let input = model_number.to_string();
     // if input.chars().contains(&'0') {
     //     continue;
