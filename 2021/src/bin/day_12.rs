@@ -1,5 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> HashMap<String, HashSet<String>> {
@@ -21,45 +23,52 @@ fn input() -> HashMap<String, HashSet<String>> {
 
 fn main() {
     let graph = input();
-    let mut paths = vec![(HashSet::<String>::new(), "start")];
-    let mut path_count = 0;
-    while let Some((mut visited, location)) = paths.pop() {
-        visited.insert(location.to_owned());
-        for cave in graph.get(location).unwrap() {
-            if cave.to_lowercase() == *cave && visited.contains(cave) {
-                continue;
-            }
-            if cave == "end" {
-                path_count += 1;
-                continue;
-            }
-            paths.push((visited.clone(), cave))
-        }
-    }
-    println!("Part 1: {}", path_count);
 
-    let mut paths = vec![(HashSet::<String>::new(), false, "start")];
-    let mut path_count = 0;
-    while let Some((mut visited, twice, location)) = paths.pop() {
-        visited.insert(location.to_owned());
-        for cave in graph.get(location).unwrap() {
-            let mut twice = twice;
-            if cave.to_lowercase() == *cave && visited.contains(cave) {
-                if twice {
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let mut paths = vec![(HashSet::<String>::new(), "start")];
+        let mut path_count = 0;
+        while let Some((mut visited, location)) = paths.pop() {
+            visited.insert(location.to_owned());
+            for cave in graph.get(location).unwrap() {
+                if cave.to_lowercase() == *cave && visited.contains(cave) {
                     continue;
-                } else {
-                    twice = true;
                 }
+                if cave == "end" {
+                    path_count += 1;
+                    continue;
+                }
+                paths.push((visited.clone(), cave))
             }
-            if cave == "start" {
-                continue;
-            }
-            if cave == "end" {
-                path_count += 1;
-                continue;
-            }
-            paths.push((visited.clone(), twice, cave))
         }
+        println!("Part 1: {}", path_count);
     }
-    println!("Part 2: {}", path_count);
+
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let mut paths = vec![(HashSet::<String>::new(), false, "start")];
+        let mut path_count = 0;
+        while let Some((mut visited, twice, location)) = paths.pop() {
+            visited.insert(location.to_owned());
+            for cave in graph.get(location).unwrap() {
+                let mut twice = twice;
+                if cave.to_lowercase() == *cave && visited.contains(cave) {
+                    if twice {
+                        continue;
+                    } else {
+                        twice = true;
+                    }
+                }
+                if cave == "start" {
+                    continue;
+                }
+                if cave == "end" {
+                    path_count += 1;
+                    continue;
+                }
+                paths.push((visited.clone(), twice, cave))
+            }
+        }
+        println!("Part 2: {}", path_count);
+    }
 }

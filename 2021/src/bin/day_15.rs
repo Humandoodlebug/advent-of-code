@@ -1,5 +1,6 @@
 use ansi_term::Colour;
 use std::collections::BinaryHeap;
+use util::PerfTimer;
 
 extern crate util;
 
@@ -88,31 +89,38 @@ fn print_path(grid: &[Vec<i32>], path: &[(usize, usize)]) {
 
 fn main() {
     let grid = input();
-    let part1 = find_min_cost(&grid);
-    println!("Part 1: {}", part1);
 
-    let large_grid: Vec<Vec<i32>> = (0..5)
-        .flat_map(|i| {
-            grid.iter()
-                .map(|l| {
-                    (0..5)
-                        .flat_map(|j| {
-                            l.iter()
-                                .map(|v| {
-                                    let mut new_v = *v + i + j;
-                                    while new_v > 9 {
-                                        new_v -= 9
-                                    }
-                                    new_v
-                                })
-                                .collect::<Vec<i32>>()
-                        })
-                        .collect()
-                })
-                .collect::<Vec<Vec<i32>>>()
-        })
-        .collect();
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let part1 = find_min_cost(&grid);
+        println!("Part 1: {}", part1);
+    }
 
-    let part2 = find_min_cost(&large_grid);
-    println!("Part 2: {}", part2)
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let large_grid: Vec<Vec<i32>> = (0..5)
+            .flat_map(|i| {
+                grid.iter()
+                    .map(|l| {
+                        (0..5)
+                            .flat_map(|j| {
+                                l.iter()
+                                    .map(|v| {
+                                        let mut new_v = *v + i + j;
+                                        while new_v > 9 {
+                                            new_v -= 9
+                                        }
+                                        new_v
+                                    })
+                                    .collect::<Vec<i32>>()
+                            })
+                            .collect()
+                    })
+                    .collect::<Vec<Vec<i32>>>()
+            })
+            .collect();
+
+        let part2 = find_min_cost(&large_grid);
+        println!("Part 2: {}", part2)
+    }
 }

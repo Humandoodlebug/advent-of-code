@@ -1,3 +1,5 @@
+use util::PerfTimer;
+
 extern crate util;
 
 #[derive(Debug, Clone)]
@@ -75,23 +77,29 @@ fn main() {
         pixels,
     };
 
-    for l in enhance(&alg, &image).pixels {
-        println!(
-            "{}",
-            l.iter()
-                .map(|&b| if b { '#' } else { '.' })
-                .collect::<String>()
-        );
-    }
-    let result = enhance(&alg, &enhance(&alg, &image));
+    {
+        let _timer = PerfTimer::new("Part 1");
+        for l in enhance(&alg, &image).pixels {
+            println!(
+                "{}",
+                l.iter()
+                    .map(|&b| if b { '#' } else { '.' })
+                    .collect::<String>()
+            );
+        }
+        let result = enhance(&alg, &enhance(&alg, &image));
 
-    let part1 = result.pixels.iter().flatten().filter(|&&x| x).count();
-    println!("Part 1: {}", part1);
-
-    let mut image = image;
-    for _ in 0..50 {
-        image = enhance(&alg, &image);
+        let part1 = result.pixels.iter().flatten().filter(|&&x| x).count();
+        println!("Part 1: {}", part1);
     }
-    let part2 = image.pixels.iter().flatten().filter(|&&x| x).count();
-    println!("Part 2: {}", part2);
+
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let mut image = image;
+        for _ in 0..50 {
+            image = enhance(&alg, &image);
+        }
+        let part2 = image.pixels.iter().flatten().filter(|&&x| x).count();
+        println!("Part 2: {}", part2);
+    }
 }

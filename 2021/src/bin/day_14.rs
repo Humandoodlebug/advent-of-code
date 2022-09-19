@@ -4,6 +4,7 @@
 use std::collections::HashMap;
 
 use itertools::Itertools;
+use util::PerfTimer;
 
 extern crate util;
 
@@ -27,6 +28,7 @@ fn input() -> (Vec<char>, HashMap<(char, char), char>) {
 fn main() {
     let (template, rules) = input();
 
+    let _timer = PerfTimer::new("Both parts");
     let polymer_counts = template.array_windows().map(|&[a, b]| (a, b)).counts();
     let mut polymer_counts: HashMap<(char, char), u128> = polymer_counts
         .into_iter()

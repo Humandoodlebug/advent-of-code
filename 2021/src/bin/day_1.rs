@@ -1,5 +1,7 @@
 #![feature(array_windows)]
 
+use util::PerfTimer;
+
 extern crate util;
 
 fn main() {
@@ -8,16 +10,23 @@ fn main() {
         .map(|x| x.parse().unwrap())
         .collect();
 
-    let part1 = depths.array_windows().filter(|[x, y]| x < y).count();
-    println!("Part 1: {}", part1);
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let part1 = depths.array_windows().filter(|[x, y]| x < y).count();
+        println!("Part 1: {part1}");
+    }
 
-    let part2 = depths
-        .array_windows()
-        .map(|[x, y, z]| x + y + z)
-        .collect::<Vec<i32>>()
-        .array_windows()
-        .filter(|[x, y]| x < y)
-        .count();
+    {
+        let _timer = PerfTimer::new("Part 2");
 
-    println!("Part 2: {}", part2);
+        let part2 = depths
+            .array_windows()
+            .map(|[x, y, z]| x + y + z)
+            .collect::<Vec<i32>>()
+            .array_windows()
+            .filter(|[x, y]| x < y)
+            .count();
+
+        println!("Part 2: {part2}");
+    }
 }

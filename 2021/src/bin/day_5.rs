@@ -3,6 +3,8 @@
 use std::cmp::{max, min};
 use std::collections::HashMap;
 
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> Vec<((usize, usize), (usize, usize))> {
@@ -65,9 +67,16 @@ fn run(inp: &[((usize, usize), (usize, usize))], part2: bool) -> usize {
 
 fn main() {
     let inp = input();
-    let part1 = run(&inp, false);
-    println!("Part 1: {}", part1);
 
-    let part2 = run(&inp, true);
-    println!("Part 2: {}", part2);
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let part1 = run(&inp, false);
+        println!("Part 1: {part1}");
+    }
+
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let part2 = run(&inp, true);
+        println!("Part 2: {part2}");
+    }
 }

@@ -1,3 +1,4 @@
+use util::PerfTimer;
 use Contents::*;
 use OperatorType::*;
 
@@ -176,11 +177,7 @@ fn eval_packet(packet: &Packet) -> i128 {
                         EqualTo => i128::eq,
                         _ => panic!(),
                     };
-                    if actual_op(&left, &right) {
-                        1
-                    } else {
-                        0
-                    }
+                    i128::from(actual_op(&left, &right))
                 }
             }
         }
@@ -189,10 +186,16 @@ fn eval_packet(packet: &Packet) -> i128 {
 
 fn main() {
     let inp = input();
+
+    let part_1_timer = PerfTimer::new("Part 1");
+    let part_2_timer = PerfTimer::new("Part 2");
+
     let (_left, root_packet) = parse_packet(&inp);
     let part1 = sum_versions(&root_packet);
     println!("Part 1: {}", part1);
+    drop(part_1_timer);
 
     let part2 = eval_packet(&root_packet);
     println!("Part 2: {}", part2);
+    drop(part_2_timer);
 }

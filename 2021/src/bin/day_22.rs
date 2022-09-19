@@ -1,5 +1,6 @@
 use regex::Regex;
 use std::cmp::{max, min};
+use util::PerfTimer;
 
 extern crate util;
 
@@ -48,67 +49,74 @@ fn calc_instruction_volume(instruction: Instruction) -> i128 {
 fn main() {
     let inp = input();
     // dbg!(inp);
-    let rev: Vec<Instruction> = inp.iter().copied().rev().collect();
-    let mut part1 = 0;
-    for x in -50..=50 {
-        for y in -50..=50 {
-            for z in -50..=50 {
-                for inst in rev.iter() {
-                    if (inst.x_range.0..=inst.x_range.1).contains(&x)
-                        && (inst.y_range.0..=inst.y_range.1).contains(&y)
-                        && (inst.z_range.0..=inst.z_range.1).contains(&z)
-                    {
-                        if inst.on {
-                            part1 += 1;
+
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let rev: Vec<Instruction> = inp.iter().copied().rev().collect();
+        let mut part1 = 0;
+        for x in -50..=50 {
+            for y in -50..=50 {
+                for z in -50..=50 {
+                    for inst in rev.iter() {
+                        if (inst.x_range.0..=inst.x_range.1).contains(&x)
+                            && (inst.y_range.0..=inst.y_range.1).contains(&y)
+                            && (inst.z_range.0..=inst.z_range.1).contains(&z)
+                        {
+                            if inst.on {
+                                part1 += 1;
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
         }
-    }
-    println!("Part 1: {}", part1);
-
-    let mut layers: Vec<Instruction> = vec![];
-
-    for &inst in &inp {
-        let mut new_layers = vec![];
-        for &layer in &layers {
-            let x_min = max(inst.x_range.0, layer.x_range.0);
-            let x_max = min(inst.x_range.1, layer.x_range.1);
-
-            let y_min = max(inst.y_range.0, layer.y_range.0);
-            let y_max = min(inst.y_range.1, layer.y_range.1);
-
-            let z_min = max(inst.z_range.0, layer.z_range.0);
-            let z_max = min(inst.z_range.1, layer.z_range.1);
-
-            if x_min <= x_max && y_min <= y_max && z_min <= z_max {
-                let overlay = Instruction {
-                    on: !layer.on,
-                    x_range: (x_min, x_max),
-                    y_range: (y_min, y_max),
-                    z_range: (z_min, z_max),
-                };
-                new_layers.push(overlay);
-            }
-        }
-        layers.append(&mut new_layers);
-
-        if inst.on {
-            layers.push(inst);
-        }
+        println!("Part 1: {}", part1);
     }
 
-    let part2: i128 = layers
-        .into_iter()
-        .map(|l| {
-            if l.on {
-                calc_instruction_volume(l)
-            } else {
-                -calc_instruction_volume(l)
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let mut layers: Vec<Instruction> = vec![];
+
+        for &inst in &inp {
+            let mut new_layers = vec![];
+            for &layer in &layers {
+                let x_min = max(inst.x_range.0, layer.x_range.0);
+                let x_max = min(inst.x_range.1, layer.x_range.1);
+
+                let y_min = max(inst.y_range.0, layer.y_range.0);
+                let y_max = min(inst.y_range.1, layer.y_range.1);
+
+                let z_min = max(inst.z_range.0, layer.z_range.0);
+                let z_max = min(inst.z_range.1, layer.z_range.1);
+
+                if x_min <= x_max && y_min <= y_max && z_min <= z_max {
+                    let overlay = Instruction {
+                        on: !layer.on,
+                        x_range: (x_min, x_max),
+                        y_range: (y_min, y_max),
+                        z_range: (z_min, z_max),
+                    };
+                    new_layers.push(overlay);
+                }
             }
-        })
-        .sum();
-    println!("Part 2: {}", part2);
+            layers.append(&mut new_layers);
+
+            if inst.on {
+                layers.push(inst);
+            }
+        }
+
+        let part2: i128 = layers
+            .into_iter()
+            .map(|l| {
+                if l.on {
+                    calc_instruction_volume(l)
+                } else {
+                    -calc_instruction_volume(l)
+                }
+            })
+            .sum();
+        println!("Part 2: {}", part2);
+    }
 }

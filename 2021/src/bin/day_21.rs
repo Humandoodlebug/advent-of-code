@@ -1,3 +1,5 @@
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> (i32, i32) {
@@ -50,42 +52,48 @@ fn play_part_2(
 fn main() {
     let (p1_start, p2_start) = input();
 
-    let mut p1_pos = p1_start;
-    let mut p2_pos = p2_start;
-    let mut p1_score = 0;
-    let mut p2_score = 0;
-    let mut dice = 0;
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let mut p1_pos = p1_start;
+        let mut p2_pos = p2_start;
+        let mut p1_score = 0;
+        let mut p2_score = 0;
+        let mut dice = 0;
 
-    loop {
-        let p1_move = get_move(&mut dice);
-        p1_pos += p1_move;
-        while p1_pos > 10 {
-            p1_pos -= 10;
-        }
-        p1_score += p1_pos;
+        loop {
+            let p1_move = get_move(&mut dice);
+            p1_pos += p1_move;
+            while p1_pos > 10 {
+                p1_pos -= 10;
+            }
+            p1_score += p1_pos;
 
-        if p1_score >= 1000 {
-            let part1 = p2_score * dice;
-            println!("Part 1: {}", part1);
-            break;
-        }
+            if p1_score >= 1000 {
+                let part1 = p2_score * dice;
+                println!("Part 1: {part1}");
+                break;
+            }
 
-        let p2_move = get_move(&mut dice);
-        p2_pos += p2_move;
-        while p2_pos > 10 {
-            p2_pos -= 10;
-        }
-        p2_score += p2_pos;
+            let p2_move = get_move(&mut dice);
+            p2_pos += p2_move;
+            while p2_pos > 10 {
+                p2_pos -= 10;
+            }
+            p2_score += p2_pos;
 
-        if p2_score >= 1000 {
-            let part1 = p1_score * dice;
-            println!("Part 1: {}", part1);
-            break;
+            if p2_score >= 1000 {
+                let part1 = p1_score * dice;
+                println!("Part 1: {part1}");
+                break;
+            }
         }
     }
 
-    let dirac_dice = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
-    let (part2_p1, part2_p2) = play_part_2(&dirac_dice, p1_start, p2_start, 0, 0);
-    let part2 = std::cmp::max(part2_p1, part2_p2);
-    println!("Part 2: {}", part2);
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let dirac_dice = [(3, 1), (4, 3), (5, 6), (6, 7), (7, 6), (8, 3), (9, 1)];
+        let (part2_p1, part2_p2) = play_part_2(&dirac_dice, p1_start, p2_start, 0, 0);
+        let part2 = std::cmp::max(part2_p1, part2_p2);
+        println!("Part 2: {part2}");
+    }
 }

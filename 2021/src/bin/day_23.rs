@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use lazy_static::lazy_static;
 use priority_queue::PriorityQueue;
-use util::get_day_input;
+use util::{get_day_input, PerfTimer};
 use Piece::*;
 use Tile::*;
 
@@ -196,9 +196,15 @@ fn play<const H: usize>(grid: Grid<H>) -> usize {
 
 fn main() {
     let (grid_1, grid_2) = input();
-    let part_1 = play(grid_1);
-    println!("Part 1: {}", part_1);
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let part_1 = play(grid_1);
+        println!("Part 1: {}", part_1);
+    }
 
-    let part_2 = play(grid_2);
-    println!("Part 2: {}", part_2);
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let part_2 = play(grid_2);
+        println!("Part 2: {}", part_2);
+    }
 }

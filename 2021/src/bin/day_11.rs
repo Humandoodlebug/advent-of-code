@@ -1,5 +1,7 @@
 use std::cmp::*;
 
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> Vec<Vec<i32>> {
@@ -11,6 +13,10 @@ fn input() -> Vec<Vec<i32>> {
 
 fn main() {
     let mut grid = input();
+
+    let mut part_1_timer = PerfTimer::new("Part 1");
+    let mut part_2_timer = PerfTimer::new("Part 2");
+
     let x_len = grid.len();
     let y_len = grid[0].len();
     let mut flashes = 0;
@@ -46,10 +52,14 @@ fn main() {
         if step == 100 {
             println!("Part 1: {}", flashes);
             part1 = true;
+            part_1_timer.stop();
+            part_1_timer.print();
         }
         if !part2 && flashed.len() == x_len * y_len {
             println!("Part 2: {}", step);
             part2 = true;
+            part_2_timer.stop();
+            part_2_timer.print();
         }
         if part1 && part2 {
             break;

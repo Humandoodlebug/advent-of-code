@@ -1,3 +1,5 @@
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> ((i32, i32), (i32, i32)) {
@@ -7,6 +9,8 @@ fn input() -> ((i32, i32), (i32, i32)) {
 fn main() {
     let ((x_min, x_max), (y_min, y_max)) = input();
 
+    let part_1_timer = PerfTimer::new("Part 1");
+    let part_2_timer = PerfTimer::new("Part 2");
     let x_vel = (1..)
         .find(|x| {
             let p = (x * (x + 1)) / 2;
@@ -14,9 +18,10 @@ fn main() {
         })
         .unwrap();
     let y_vel = -y_min - 1;
-    dbg!((x_vel, y_vel));
+    // dbg!((x_vel, y_vel));
     let part1 = (y_vel * (y_vel + 1)) / 2;
     println!("Part 1: {}", part1);
+    drop(part_1_timer);
 
     let x_vel_min = x_vel;
     let x_vel_max = x_max;
@@ -42,4 +47,5 @@ fn main() {
         }
     }
     println!("Part 2: {}", part2);
+    drop(part_2_timer);
 }

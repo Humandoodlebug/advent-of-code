@@ -1,3 +1,5 @@
+use util::PerfTimer;
+
 extern crate util;
 
 fn input() -> (Vec<i32>, Vec<Vec<Vec<i32>>>) {
@@ -96,9 +98,15 @@ fn main() {
     let (calls, grids) = input();
     let grids: Vec<Grid> = grids.iter().map(|s| Grid::new(s.clone())).collect();
 
-    let p1 = part_1(&calls, grids.clone());
-    println!("Part 1: {}", p1);
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let p1 = part_1(&calls, grids.clone());
+        println!("Part 1: {p1}");
+    }
 
-    let p2 = part_2(&calls, grids);
-    println!("Part 2: {}", p2);
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let p2 = part_2(&calls, grids);
+        println!("Part 2: {p2}");
+    }
 }

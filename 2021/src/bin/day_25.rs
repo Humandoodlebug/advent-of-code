@@ -1,4 +1,4 @@
-use util::get_day_input;
+use util::{get_day_input, PerfTimer};
 use Position::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -87,19 +87,23 @@ fn generate_next_state(grid: &Grid) -> (Grid, bool) {
 
 fn main() {
     let mut grid = input();
-    let mut step = 0;
 
-    loop {
-        step += 1;
-        let (g, changed) = generate_next_state(&grid);
-        grid = g;
-        if !changed {
-            break;
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let mut step = 0;
+
+        loop {
+            step += 1;
+            let (g, changed) = generate_next_state(&grid);
+            grid = g;
+            if !changed {
+                break;
+            }
         }
+
+        println!("\n\nFinal State {}:\n", step);
+        print_grid(&grid);
+
+        println!("\n\nStep: {}", step);
     }
-
-    println!("\n\nFinal State {}:\n", step);
-    print_grid(&grid);
-
-    println!("\n\nStep: {}", step);
 }

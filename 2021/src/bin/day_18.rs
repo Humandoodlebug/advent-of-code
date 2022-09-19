@@ -1,5 +1,6 @@
 extern crate util;
 use itertools::Itertools;
+use util::PerfTimer;
 use Number::*;
 
 #[derive(PartialEq, Eq, Clone)]
@@ -140,15 +141,22 @@ fn magnitude(num: Number) -> i32 {
 
 fn main() {
     let numbers = input();
-    let added = numbers.iter().cloned().reduce(add).unwrap();
-    let part1 = magnitude(added);
-    println!("Part 1: {}", part1);
 
-    let mut part2 = 0;
-    for i in numbers.iter().cloned() {
-        for j in numbers.iter().cloned().filter(|x| *x != i) {
-            part2 = std::cmp::max(part2, magnitude(add(i.clone(), j)))
-        }
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let added = numbers.iter().cloned().reduce(add).unwrap();
+        let part1 = magnitude(added);
+        println!("Part 1: {}", part1);
     }
-    println!("Part 2: {}", part2)
+
+    {
+        let _timer = PerfTimer::new("Part 2");
+        let mut part2 = 0;
+        for i in numbers.iter().cloned() {
+            for j in numbers.iter().cloned().filter(|x| *x != i) {
+                part2 = std::cmp::max(part2, magnitude(add(i.clone(), j)))
+            }
+        }
+        println!("Part 2: {}", part2)
+    }
 }

@@ -1,6 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 use itertools::Itertools;
+use util::PerfTimer;
 
 extern crate util;
 
@@ -135,6 +136,9 @@ fn locate_scanner(
 fn main() {
     let inp = input();
     // dbg!(inp);
+
+    let part_1_timer = PerfTimer::new("Part 1");
+    let part_2_timer = PerfTimer::new("Part 2");
     let mut origin = inp[0].clone();
     let mut remaining: HashMap<usize, Vec<(i32, i32, i32)>> =
         inp[1..].iter().cloned().enumerate().collect();
@@ -161,6 +165,7 @@ fn main() {
         remaining = left;
     }
     println!("Part 1: {}", locations.len());
+    drop(part_1_timer);
 
     let mut part2 = 0;
     for &(x_a, y_a, z_a) in scanner_locations.values() {
@@ -169,5 +174,6 @@ fn main() {
             part2 = std::cmp::max(part2, distance);
         }
     }
-    println!("Part 2: {}", part2)
+    println!("Part 2: {}", part2);
+    drop(part_2_timer);
 }

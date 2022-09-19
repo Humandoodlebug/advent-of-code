@@ -2,6 +2,8 @@
 
 use std::collections::HashMap;
 
+use util::PerfTimer;
+
 extern crate util;
 
 fn main() {
@@ -13,6 +15,8 @@ fn main() {
         .map(|s| s.parse().unwrap())
         .collect();
     inp.sort_unstable();
+
+    let part_1_timer = PerfTimer::new("Part 1");
 
     let mut all_fish = inp.clone();
     for _day in 0..80 {
@@ -29,19 +33,21 @@ fn main() {
     }
 
     println!("Part 1: {}", all_fish.len());
-    let groups = inp.group_by(|x, y| x == y);
-    for g in groups {
-        dbg!(g[0]);
-        dbg!(inp.clone().into_iter().filter(|&x| x == g[0]).count());
-        dbg!(g.len());
-    }
+    drop(part_1_timer);
+    // let groups = inp.group_by(|x, y| x == y);
+    // for g in groups {
+    //     dbg!(g[0]);
+    //     dbg!(inp.clone().into_iter().filter(|&x| x == g[0]).count());
+    //     dbg!(g.len());
+    // }
+    let part_2_timer = PerfTimer::new("Part 2");
     let mut fish_map: HashMap<i32, i128> = inp
         .group_by(|x, y| x == y)
         .map(|x| (x[0], x.len() as i128))
         .collect();
 
     for _day in 0..256 {
-        dbg!(fish_map.values().sum::<i128>());
+        // dbg!(fish_map.values().sum::<i128>());
         let mut new_fish_map = HashMap::new();
         for i in 1..=8 {
             let &fish = fish_map.get(&i).unwrap_or(&0);
@@ -52,5 +58,6 @@ fn main() {
         new_fish_map.insert(8, births);
         fish_map = new_fish_map;
     }
-    println!("Part 2: {}", fish_map.values().sum::<i128>())
+    println!("Part 2: {}", fish_map.values().sum::<i128>());
+    drop(part_2_timer);
 }
