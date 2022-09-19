@@ -1,3 +1,5 @@
+use util::PerfTimer;
+
 extern crate util;
 
 struct State {
@@ -53,22 +55,28 @@ fn main() {
         .map(|s| s.parse().unwrap())
         .collect();
 
-    let mut mem = input.clone();
-    mem[1] = 12;
-    mem[2] = 2;
-    let part1 = run_program(mem);
+    {
+        let _timer = PerfTimer::new("Part 1");
+        let mut mem = input.clone();
+        mem[1] = 12;
+        mem[2] = 2;
+        let part1 = run_program(mem);
 
-    println!("Part 1: {}", part1);
+        println!("Part 1: {part1}");
+    }
 
-    for noun in 0..100 {
-        for verb in 0..100 {
-            let mut mem = input.clone();
-            mem[1] = noun;
-            mem[2] = verb;
-            let result = run_program(mem);
-            if result == 19690720 {
-                println!("Part 2: {}", 100 * noun + verb);
-                return;
+    {
+        let _timer = PerfTimer::new("Part 2");
+        for noun in 0..100 {
+            for verb in 0..100 {
+                let mut mem = input.clone();
+                mem[1] = noun;
+                mem[2] = verb;
+                let result = run_program(mem);
+                if result == 19690720 {
+                    println!("Part 2: {}", 100 * noun + verb);
+                    return;
+                }
             }
         }
     }
