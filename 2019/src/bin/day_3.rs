@@ -3,6 +3,7 @@ use std::{
     collections::{HashMap, HashSet},
 };
 
+use util::PerfTimer;
 use Instruction::*;
 
 enum Instruction {
@@ -36,6 +37,8 @@ fn input() -> (Vec<Instruction>, Vec<Instruction>) {
 
 fn main() {
     let (wire_1, wire_2) = input();
+
+    let _timer = PerfTimer::new("Both parts");
     let mut wire_1_positions = HashSet::new();
     let mut wire_1_map = HashMap::new();
 

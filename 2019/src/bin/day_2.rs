@@ -15,13 +15,13 @@ enum Code {
 fn execute_operation(State { mut mem, mut pos }: State) -> Code {
     match mem[pos] {
         1 => {
-            let params = (&mem[pos + 1..=pos + 3]).to_owned();
+            let params = mem[pos + 1..=pos + 3].to_owned();
             mem[params[2]] = mem[params[0]] + mem[params[1]];
             pos += 4;
             Code::Success(State { mem, pos })
         }
         2 => {
-            let args = (&mem[pos + 1..=pos + 3]).to_owned();
+            let args = mem[pos + 1..=pos + 3].to_owned();
             mem[args[2]] = mem[args[0]] * mem[args[1]];
             pos += 4;
             Code::Success(State { mem, pos })

@@ -2,7 +2,7 @@
 
 use std::cmp::Ordering;
 
-use util::get_day_input;
+use util::{get_day_input, PerfTimer};
 
 fn input() -> (u64, u64) {
     let raw = get_day_input(4);
@@ -20,6 +20,8 @@ enum DoubleState {
 
 fn main() {
     let (lower, upper) = input();
+
+    let _timer = PerfTimer::new("Both parts");
     let mut part_1 = 0;
     let mut part_2 = 0;
     for i in lower..=upper {
