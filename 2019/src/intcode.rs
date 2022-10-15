@@ -1,3 +1,10 @@
+pub fn parse_input(raw: &str) -> Vec<i128> {
+    raw.trim_end()
+        .split(',')
+        .map(|s| s.parse().unwrap())
+        .collect()
+}
+
 #[derive(Clone)]
 pub struct State {
     pub mem: Vec<i128>,
