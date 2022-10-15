@@ -1,3 +1,5 @@
+pub mod intcode;
+
 use std::time::Instant;
 
 pub struct PerfTimer<'a> {
