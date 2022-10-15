@@ -11,3 +11,4 @@ path = "src/util.rs"
 
 [dependencies]
 itertools = "0.10.5"
+regex = "1.6"
