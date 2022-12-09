@@ -166,7 +166,7 @@ fn main() {
         let part_1: u64 = dir_sizes(directories.unwrap_dir())
             .1
             .iter()
-            .filter(|&&x| x <= 100000)
+            .filter(|&&x| x <= 100_000)
             .sum();
         println!("Part 1: {part_1}");
     }
@@ -174,8 +174,8 @@ fn main() {
         let _timer = PerfTimer::new("Part 2");
         let directories = build_directories(&commands);
         let (used_space, mut dir_sizes) = dir_sizes(directories.unwrap_dir());
-        let remaining_space = 70000000 - used_space;
-        let space_to_clear = 30000000 - remaining_space;
+        let remaining_space = 70_000_000 - used_space;
+        let space_to_clear = 30_000_000 - remaining_space;
         dir_sizes.sort();
         let part_2 = dir_sizes
             .into_iter()
