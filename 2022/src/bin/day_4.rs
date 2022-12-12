@@ -36,9 +36,7 @@ fn main() {
         let part_2 = assignments
             .iter()
             .copied()
-            .filter(|&((l_a, l_b), (r_a, r_b))| {
-                l_a <= r_b && l_b >= r_a
-            })
+            .filter(|&((l_a, l_b), (r_a, r_b))| l_a <= r_b && l_b >= r_a)
             .count();
 
         println!("Part 2: {part_2}");

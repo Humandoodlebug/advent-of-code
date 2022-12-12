@@ -33,7 +33,10 @@ fn main() {
             .map(|(left, right)| {
                 let left: HashSet<char> = HashSet::from_iter(left.iter().copied());
                 let right: HashSet<char> = HashSet::from_iter(right.iter().copied());
-                left.intersection(&right).copied().map(priority).sum::<i64>()
+                left.intersection(&right)
+                    .copied()
+                    .map(priority)
+                    .sum::<i64>()
             })
             .sum();
         println!("Part 1: {part_1}");

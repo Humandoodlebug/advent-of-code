@@ -50,7 +50,7 @@ fn main() {
                 part_1 += cycle_v(cycle, reg_x);
                 draw_pixel(&mut part_2, cycle, reg_x);
                 cycle += 1;
-            },
+            }
             Instruction::AddX(v) => {
                 part_1 += cycle_v(cycle, reg_x);
                 draw_pixel(&mut part_2, cycle, reg_x);
@@ -74,5 +74,4 @@ fn main() {
         }
         println!();
     }
-
 }
