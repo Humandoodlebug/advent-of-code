@@ -12,16 +12,7 @@ impl Ord for Value {
     fn cmp(&self, other: &Self) -> Ordering {
         match (self, other) {
             (Value::Integer(left), Value::Integer(right)) => left.cmp(right),
-            (Value::List(left), Value::List(right)) => {
-                for (l, r) in left.iter().zip(right.iter()) {
-                    match l.cmp(r) {
-                        Ordering::Less => return Ordering::Less,
-                        Ordering::Equal => {}
-                        Ordering::Greater => return Ordering::Greater,
-                    }
-                }
-                left.len().cmp(&right.len())
-            }
+            (Value::List(left), Value::List(right)) => left.cmp(right),
             (left @ Value::List(_), Value::Integer(right)) => {
                 left.cmp(&Value::List(vec![Value::Integer(*right)]))
             }
