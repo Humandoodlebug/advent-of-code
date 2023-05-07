@@ -12,6 +12,28 @@ struct Sensor {
     beacon_pos: Point,
 }
 
+fn input() -> Vec<Sensor> {
+    let re =
+        Regex::new(r#"Sensor at x=(?P<sensor_x>-?\d+), y=(?P<sensor_y>-?\d+): closest beacon is at x=(?P<beacon_x>-?\d+), y=(?P<beacon_y>-?\d+)"#)
+            .unwrap();
+    util::get_day_input(15)
+        .trim()
+        .lines()
+        .map(|line| {
+            let captures = re.captures(line).unwrap();
+            let pos = (
+                captures.name("sensor_x").unwrap().as_str().parse().unwrap(),
+                captures.name("sensor_y").unwrap().as_str().parse().unwrap(),
+            );
+            let beacon_pos = (
+                captures.name("beacon_x").unwrap().as_str().parse().unwrap(),
+                captures.name("beacon_y").unwrap().as_str().parse().unwrap(),
+            );
+            Sensor { pos, beacon_pos }
+        })
+        .collect()
+}
+
 #[derive(Default)]
 struct RangeManager {
     ranges: HashSet<(i128, i128)>,
@@ -67,28 +89,6 @@ impl RangeManager {
     fn sum_ranges(&self) -> i128 {
         self.ranges.iter().map(|(l, r)| r - l + 1).sum()
     }
-}
-
-fn input() -> Vec<Sensor> {
-    let re =
-        Regex::new(r#"Sensor at x=(?P<sensor_x>-?\d+), y=(?P<sensor_y>-?\d+): closest beacon is at x=(?P<beacon_x>-?\d+), y=(?P<beacon_y>-?\d+)"#)
-            .unwrap();
-    util::get_day_input(15)
-        .trim()
-        .lines()
-        .map(|line| {
-            let captures = re.captures(line).unwrap();
-            let pos = (
-                captures.name("sensor_x").unwrap().as_str().parse().unwrap(),
-                captures.name("sensor_y").unwrap().as_str().parse().unwrap(),
-            );
-            let beacon_pos = (
-                captures.name("beacon_x").unwrap().as_str().parse().unwrap(),
-                captures.name("beacon_y").unwrap().as_str().parse().unwrap(),
-            );
-            Sensor { pos, beacon_pos }
-        })
-        .collect()
 }
 
 fn manhattan((x_a, y_a): Point, (x_b, y_b): Point) -> u128 {
