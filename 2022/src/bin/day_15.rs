@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet, HashSet};
+use std::collections::HashSet;
 
 use itertools::Itertools;
 use regex::Regex;
@@ -10,44 +10,6 @@ type Point = (i128, i128);
 struct Sensor {
     pos: Point,
     beacon_pos: Point,
-}
-
-struct Diamond {
-    left: Point,
-    right: Point,
-    top: Point,
-    bottom: Point,
-}
-
-impl Diamond {
-    // fn area(&self) -> i128 {
-    //     self.top.
-    // }
-    // fn try_new(left: Point, right: Point) -> Option<Diamond> {
-
-    // }
-
-    // fn left(&self) -> Point {
-    //     self.left
-    // }
-
-    // fn right(&self) -> Point {
-    //     self.right
-    // }
-
-    // fn top(&self) -> Point {
-    //     let from_left_double = (self.right.0 - self.left.0) + (self.left.1 - self.right.1);
-    //     assert!(from_left_double % 2 == 0);
-    //     let from_left = from_left_double / 2;
-    //     (self.left.0 + from_left, self.left.1 - from_left)
-    // }
-
-    // fn bottom(&self) -> Point {
-    //     let from_left_double = (self.right.0 - self.left.0) - (self.left.1 - self.right.1);
-    //     assert!(from_left_double % 2 == 0);
-    //     let from_left = from_left_double / 2;
-    //     (self.left.0 + from_left, self.left.1 + from_left)
-    // }
 }
 
 #[derive(Default)]
