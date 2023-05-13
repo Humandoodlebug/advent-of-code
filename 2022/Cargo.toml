@@ -13,3 +13,8 @@ path = "src/util.rs"
 itertools = "0.10.5"
 rayon = "1.7.0"
 regex = "1.8.1"
+smallvec = { version = "1.10.0", features = [
+    "union",
+    "const_generics",
+    "const_new",
+] }
