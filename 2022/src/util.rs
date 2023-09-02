@@ -8,7 +8,6 @@ pub struct PerfTimer<'a> {
 
 impl<'a> PerfTimer<'a> {
     pub fn new(name: &'a str) -> Self {
-        let name = name;
         let start = Instant::now();
         Self {
             name,
