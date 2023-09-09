@@ -14,7 +14,7 @@ struct InputValve {
 fn input() -> HashMap<String, InputValve> {
     let re =
         Regex::new(
-            r#"^Valve (?P<name>[A-Z]{2}) has flow rate=(?P<rate>\d+); tunnels? leads? to valves? (?P<leads_to>(?:[A-Z]{2}, )*[A-Z]{2})$"#
+            r"^Valve (?P<name>[A-Z]{2}) has flow rate=(?P<rate>\d+); tunnels? leads? to valves? (?P<leads_to>(?:[A-Z]{2}, )*[A-Z]{2})$"
         ).unwrap();
 
     util::get_day_input(16)

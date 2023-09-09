@@ -42,7 +42,7 @@ fn input() -> (Vec<Vec<u8>>, Point, Point) {
             line.chars()
                 .enumerate()
                 .map(|(j, c)| {
-                    if ('a'..='z').contains(&c) {
+                    if c.is_ascii_lowercase() {
                         c as u8 - b'a'
                     } else if c == 'S' {
                         start_pos = Some((i, j));

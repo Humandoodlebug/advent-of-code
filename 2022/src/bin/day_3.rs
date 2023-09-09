@@ -15,9 +15,9 @@ fn input() -> Vec<(Vec<char>, Vec<char>)> {
 }
 
 fn priority(c: char) -> i64 {
-    if ('a'..='z').contains(&c) {
+    if c.is_ascii_lowercase() {
         (c as i64) - ('a' as i64) + 1
-    } else if ('A'..='Z').contains(&c) {
+    } else if c.is_ascii_uppercase() {
         (c as i64) - ('A' as i64) + 27
     } else {
         panic!("Unhandled letter {c:?}")

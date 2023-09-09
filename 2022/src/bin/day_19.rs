@@ -31,9 +31,9 @@ struct Blueprint {
 }
 
 fn input() -> Vec<Blueprint> {
-    let blueprint_regex = Regex::new(r#"^Blueprint (\d+): (.+)\.$"#).unwrap();
+    let blueprint_regex = Regex::new(r"^Blueprint (\d+): (.+)\.$").unwrap();
     let recipe_regex = Regex::new(
-        r#"^Each (?P<robot>\w+) robot costs (?P<ore>\d+) ore(?: and (?:(?P<clay>\d+) clay|(?P<obsidian>\d+) obsidian))?$"#,
+        r"^Each (?P<robot>\w+) robot costs (?P<ore>\d+) ore(?: and (?:(?P<clay>\d+) clay|(?P<obsidian>\d+) obsidian))?$",
     ).unwrap();
 
     let raw = util::get_day_input(19);

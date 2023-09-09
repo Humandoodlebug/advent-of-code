@@ -14,7 +14,7 @@ struct Sensor {
 
 fn input() -> Vec<Sensor> {
     let re =
-        Regex::new(r#"Sensor at x=(?P<sensor_x>-?\d+), y=(?P<sensor_y>-?\d+): closest beacon is at x=(?P<beacon_x>-?\d+), y=(?P<beacon_y>-?\d+)"#)
+        Regex::new(r"Sensor at x=(?P<sensor_x>-?\d+), y=(?P<sensor_y>-?\d+): closest beacon is at x=(?P<beacon_x>-?\d+), y=(?P<beacon_y>-?\d+)")
             .unwrap();
     util::get_day_input(15)
         .trim()
