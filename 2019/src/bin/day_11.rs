@@ -1,6 +1,6 @@
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
-use util::PerfTimer;
+use util::{intcode::State, PerfTimer};
 
 #[derive(Clone, Copy, Debug)]
 enum Paint {
@@ -78,8 +78,8 @@ fn paint_hull(mut mem: Vec<i128>, hull: Hull) -> Hull {
     let inp_hull = Rc::clone(&hull);
     let out_hull = Rc::clone(&hull);
     let mut should_paint = true;
-    util::intcode::run_to_completion(
-        mem,
+    let mut state = State::new(mem);
+    state.run_to_completion(
         move || match inp_hull.borrow().inspect() {
             Paint::Black => 0,
             Paint::White => 1,

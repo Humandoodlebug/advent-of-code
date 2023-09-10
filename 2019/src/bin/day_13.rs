@@ -6,7 +6,10 @@ use std::collections::HashMap;
 //     event::{KeyCode, KeyModifiers},
 // };
 
-use util::{intcode, PerfTimer};
+use util::{
+    intcode::{self, State},
+    PerfTimer,
+};
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum Tile {
@@ -51,8 +54,8 @@ fn main() {
         mem.extend((0..1000000).map(|_| 0));
         let mut screen = HashMap::new();
         let mut output_buffer = Vec::with_capacity(3);
-        intcode::run_to_completion(
-            mem,
+        let mut state = State::new(mem);
+        state.run_to_completion(
             || panic!("No input available"),
             |x| {
                 output_buffer.push(x);
@@ -77,13 +80,12 @@ fn main() {
             // Pay no attention to this...
             mem[i] = 3;
         }
-        mem.extend((0..1000000).map(|_| 0));
         mem[0] = 2;
         let mut score = 0;
         let mut output_buffer = Vec::with_capacity(3);
+        let mut state = State::new(mem);
 
-        intcode::run_to_completion(
-            mem,
+        state.run_to_completion(
             || 0i128,
             |x| {
                 output_buffer.push(x);
