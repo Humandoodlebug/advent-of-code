@@ -1,0 +1,21 @@
+[package]
+name = "advent_of_code_2023"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "util"
+path = "src/util.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+contain = "0.4"
+itertools = "0.10.5"
+rayon = "1.7.0"
+regex = "1.8.1"
+smallvec = { version = "1.10.0", features = [
+    "union",
+    "const_generics",
+    "const_new",
+] }
