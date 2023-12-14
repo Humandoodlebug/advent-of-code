@@ -20,3 +20,4 @@ smallvec = { version = "1.11.2", features = [
     "const_generics",
     "const_new",
 ] }
+indexmap = "2.1.0"
