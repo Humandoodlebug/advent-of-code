@@ -127,7 +127,7 @@ enum SearchState {
     Leaving,
 }
 
-fn move_state(map: &Vec<Vec<Pipe>>, state: State) -> Vec<State> {
+fn move_state(map: &[Vec<Pipe>], state: State) -> Vec<State> {
     let mut new_states = Vec::new();
     for direction in [
         Direction::North,
