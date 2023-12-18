@@ -76,26 +76,49 @@ def mv(
     return next_states
 
 
-def calculate_priority(in_map: list[list[int]], state: State) -> int:
-    return (
-        state.path_cost
-        + (len(in_map) - state.row - 1)
-        + (len(in_map[0]) - state.col - 1)
-    )
+def calculate_priority(heuristic_map: list[list[int]], state: State) -> int:
+    return state.path_cost + heuristic_map[state.row][state.col]
 
 
 def hash_position(in_map: list[list[int]], state: State) -> int:
     return (state.row * len(in_map[0]) + state.col) * 4 + state.direction.value
 
 
+def precalculate_heuristic(in_map: list[list[int]]) -> list[list[int]]:
+    rows = len(in_map)
+    cols = len(in_map[0])
+    to_process: PriorityQueue[(int, int, int)] = PriorityQueue()
+    to_process.put((0, rows - 1, cols - 1))
+    results: list[list[int | None]] = [[None for _ in range(cols)] for _ in range(rows)]
+    to_find = len(results * len(results[0]))
+    while to_find > 0:
+        (cost, row, col) = to_process.get()
+        if results[row][col] is not None:
+            continue
+        results[row][col] = cost
+        to_find -= 1
+        next_cost = cost + in_map[row][col]
+        next_states = [
+            (next_cost, row + r, col + c)
+            for (r, c) in [(0, 1), (1, 0), (0, -1), (-1, 0)]
+            if row + r >= 0 and row + r < rows and col + c >= 0 and col + c < cols
+        ]
+        for next_state in next_states:
+            if results[next_state[1]][next_state[2]] is None:
+                to_process.put(next_state)
+    assert all(result is not None for row in results for result in row)
+    return results
+
+
 def run(in_map: list[list[int]], min_moves: int, max_moves: int) -> int:
+    heuristic_map = precalculate_heuristic(in_map)
     initial_states = [
         State(0, 0, direction, 0) for direction in [Direction.RIGHT, Direction.DOWN]
     ]
     been = [False for _ in range(len(in_map) * len(in_map[0]) * 4)]
     to_process: PriorityQueue[(int, State)] = PriorityQueue()
     for s in initial_states:
-        to_process.put((calculate_priority(in_map, s), s))
+        to_process.put((calculate_priority(heuristic_map, s), s))
 
     while True:
         (_, state) = to_process.get()
@@ -107,7 +130,9 @@ def run(in_map: list[list[int]], min_moves: int, max_moves: int) -> int:
         next_states = mv(in_map, min_moves, max_moves, state)
         for next_state in next_states:
             if not been[hash_position(in_map, next_state)]:
-                to_process.put((calculate_priority(in_map, next_state), next_state))
+                to_process.put(
+                    (calculate_priority(heuristic_map, next_state), next_state)
+                )
 
 
 def main():
