@@ -22,8 +22,8 @@ fn main() {
         let _timer = PerfTimer::new("Part 1");
         let mut list_a: Vec<u64> = input.iter().map(|(a, _)| *a).collect();
         let mut list_b: Vec<u64> = input.iter().map(|(_, b)| *b).collect();
-        list_a.sort();
-        list_b.sort();
+        list_a.sort_unstable();
+        list_b.sort_unstable();
 
         let part_1: u64 = list_a
             .iter()
@@ -39,7 +39,7 @@ fn main() {
         let list_b: Vec<u64> = input.iter().map(|(_, b)| *b).collect();
 
         let mut b_counts = HashMap::new();
-        for &x in list_b.iter() {
+        for &x in &list_b {
             *b_counts.entry(x).or_insert(0) += 1;
         }
 

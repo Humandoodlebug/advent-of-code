@@ -7,6 +7,7 @@ pub struct PerfTimer<'a> {
 }
 
 impl<'a> PerfTimer<'a> {
+    #[must_use]
     pub fn new(name: &'a str) -> Self {
         let start = Instant::now();
         Self {
@@ -27,6 +28,7 @@ impl<'a> PerfTimer<'a> {
         eprintln!("{} took {:?}", self.name, self.duration());
     }
 
+    #[must_use]
     pub fn is_running(&self) -> bool {
         self.end.is_none()
     }
@@ -37,7 +39,7 @@ impl<'a> PerfTimer<'a> {
     }
 }
 
-impl<'a> Drop for PerfTimer<'a> {
+impl Drop for PerfTimer<'_> {
     fn drop(&mut self) {
         let now = Instant::now();
         if self.is_running() {
@@ -47,6 +49,7 @@ impl<'a> Drop for PerfTimer<'a> {
     }
 }
 
+#[must_use]
 pub fn get_day_input(day: i32) -> String {
     std::fs::read_to_string(format!("input/day{day}.txt")).unwrap()
 }
