@@ -9,6 +9,7 @@ path = "src/util.rs"
 
 [dependencies]
 itertools = "0.13"
+regex = "1.11"
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
